@@ -23,10 +23,4 @@ def parse_script_arguments() -> argparse.Namespace:
         help="Increase verbosity: -v = INFO, -vv = DEBUG",
     )
 
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Simulate the actions without making changes.",
-    )
-
     return parser.parse_args()

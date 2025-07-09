@@ -13,7 +13,7 @@
 - Uses the Discogs API to resolve metadata
 - Automatically handles API rate limits (60 requests per minute)
 - Writes enriched metadata to a `output.csv` file
-- Supports dry-run mode and verbose/debug logging
+- Supports verbose/debug logging
 
 ---
 
@@ -46,14 +46,24 @@ cp .env.example .env
 
 Edit `.env` with your preferred text editor:
 
-```env
-REKORDBOX_MASTERDB_PATH="/path/to/rekordbox/master.db"
-REKORDBOX_MASTERDB_PASSWORD=""
-DISCOGS_TOKEN=""
-VARIOUS_ARTIST_NAME="Various Artists"
-```
+* `REKORDBOX_MASTERDB_PATH` – full path to your Rekordbox SQLite DB
+* `REKORDBOX_MASTERDB_PASSWORD` – the password for decrypting the SQLite DB
+* `DISCOGS_TOKEN` – your Discogs API token (follow [this guide](#getting-a-discogs-api-token) to get token)
+* `VARIOUS_ARTIST_NAME` – the name used to represent various artist releases
+* `INCLUDE_NO_HITS=true|false` – whether to write tracks with no hits (in Discogs) to the output CSV
+* `INCLUDE_MULTIPLE_HITS=true|false` – whether to allow for multiple hits (in Discogs) for the same track to be written to the output CSV
 
 > 🔐 Note: Your Rekordbox database must be decrypted using your master password.
+
+### Getting a Discogs API Token
+
+To use the Discogs API, you'll need a personal access token. Here's how to get one:
+
+1. Go to [https://www.discogs.com](https://www.discogs.com) and log into your account.
+2. Click your avatar in the top-right corner and select **Settings**.
+3. In the sidebar, click **Developers**.
+4. Scroll to the section **"Just need a personal access token?"** and click **Generate token**.
+5. Copy the token and paste it into your `.env` file under `DISCOGS_TOKEN`.
 
 ### 3. Install Dependencies
 
@@ -74,14 +84,12 @@ poetry run discogs2rb
 ```
 
 ### Optional Arguments
-
-- `--dry-run`: Run the script without writing to the output CSV
 - `-v` or `-vv`: Enable verbose or debug logging
 
 Example:
 
 ```bash
-poetry run discogs2rb --dry-run -vv
+poetry run discogs2rb -vv
 ```
 
 ---

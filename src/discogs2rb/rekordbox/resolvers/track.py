@@ -37,6 +37,7 @@ def get_tracks_with_missing_album() -> List[Track] | Literal[False]:
                 AlbumID IS NULL
                 OR AlbumArtistID IS NULL
             )
+        LIMIT 100
 """
         cursor.execute(query)
 

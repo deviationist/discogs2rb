@@ -120,7 +120,7 @@ def get_artist_names(artists) -> str | None:
     return None
 
 
-def search_release_metadata(track: str, artist: str) -> Optional[Dict[str, str]]:
+def search_release_metadata(track: str, artist: str, allow_multiple_hits: bool = True) -> Optional[Dict[str, str]]:
     """
     Search for a release by track and artist name.
     Returns metadata like title, artist, year, and release date.
@@ -140,8 +140,11 @@ def search_release_metadata(track: str, artist: str) -> Optional[Dict[str, str]]
         return None
 
     raw_releases = data["results"]
-    if not raw_releases:
+    if not raw_releases or len(raw_releases) == 0:
         return None
+
+    if not allow_multiple_hits:
+        raw_releases = raw_releases[:1]
 
     logger.debug(f'Found {len(raw_releases)} hits, proceeding to parse.')
     releases = []

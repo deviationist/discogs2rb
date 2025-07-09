@@ -30,10 +30,6 @@ def get_various_artist_name() -> str:
     return DISCOGS_TOKEN
 
 
-def is_dry_run() -> bool:
-    return get_args().dry_run
-
-
 def get_logger_name() -> str:
     LOGGER_NAME = os.getenv("LOGGER_NAME")
     if LOGGER_NAME:
