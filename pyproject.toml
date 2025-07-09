@@ -1,0 +1,38 @@
+[project]
+name = "discogs2rb"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Robert Sæther",email = "robert4832@pm.me"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pysqlcipher3 (>=1.2.0,<2.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "rich (>=14.0.0,<15.0.0)",
+    "requests (>=2.32.4,<3.0.0)",
+]
+
+[tool.poetry]
+packages = [{include = "discogs2rb", from = "src"}]
+
+[tool.poetry.scripts]
+discogs2rb = "discogs2rb.__main__:main"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.12.2"
+mypy = "^1.16.1"
+black = "^25.1.0"
+
+[tool.mypy]
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = "pysqlcipher3"
+ignore_errors = true
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
