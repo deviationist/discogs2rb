@@ -4,12 +4,24 @@ from ..data_types import Track, Artist, Album
 from typing import Literal, List
 
 
-def get_tracks_with_missing_album() -> List[Track] | Literal[False]:
+def paths_to_ignore_query_part(paths_to_ignore: List[str]) -> str:
+    if len(paths_to_ignore) == 0:
+        return ""
+    query = ""
+    for path_to_ignore in paths_to_ignore:
+        query += f"AND c.FolderPath NOT LIKE '%{path_to_ignore}%'"
+    return query
+
+
+def get_tracks_with_missing_album(
+    paths_to_ignore: List[str] = [], order_by: str = "TrackTitle ASC"
+) -> List[Track] | Literal[False]:
     db = RekordboxDB()
     cursor = db.cursor
+    paths_to_ignore_str = paths_to_ignore_query_part(paths_to_ignore)
 
     try:
-        query = """
+        query = f"""
         SELECT
             c.ID AS TrackID,
             c.Title AS TrackTitle,
@@ -32,14 +44,15 @@ def get_tracks_with_missing_album() -> List[Track] | Literal[False]:
         WHERE
             c.rb_local_deleted = 0
             AND c.rb_local_deleted = 0
-            AND c.FolderPath NOT LIKE '%Memes%'
+            {paths_to_ignore_str}
             AND (
                 AlbumID IS NULL
                 OR AlbumArtistID IS NULL
             )
-        LIMIT 100
+        ORDER BY ?
 """
-        cursor.execute(query)
+
+        cursor.execute(query, (order_by,))
 
         rows = cursor.fetchall()
         if rows:
@@ -60,14 +73,13 @@ def get_tracks_with_missing_album() -> List[Track] | Literal[False]:
 
                 if row_dict.get("AlbumID"):
                     album = Album(
-                        id=int(row_dict["AlbumID"]),
-                        name=row_dict["AlbumName"]
+                        id=int(row_dict["AlbumID"]), name=row_dict["AlbumName"]
                     )
 
                 if row_dict.get("AlbumArtistID"):
-                    album_artist = Album(
+                    album_artist = Artist(
                         id=int(row_dict["AlbumArtistID"]),
-                        name=row_dict["AlbumArtistName"]
+                        name=row_dict["AlbumArtistName"],
                     )
 
                 # Provide None for artwork fields if they don't exist
@@ -79,7 +91,7 @@ def get_tracks_with_missing_album() -> List[Track] | Literal[False]:
                         release_date=row_dict["TrackReleaseDate"],
                         artist=artist,
                         album=album,
-                        album_artist=album_artist
+                        album_artist=album_artist,
                     )
                 )
             if len(tracks) > 0:

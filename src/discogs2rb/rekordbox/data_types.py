@@ -1,12 +1,15 @@
 from typing import NamedTuple, Optional
 
+
 class Artist(NamedTuple):
     id: int
     name: str
 
+
 class Album(NamedTuple):
     id: int
     name: str
+
 
 class Track(NamedTuple):
     id: int
@@ -16,4 +19,3 @@ class Track(NamedTuple):
     artist: Optional[Artist]
     album: Optional[Album]
     album_artist: Optional[Artist]
-

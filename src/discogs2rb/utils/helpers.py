@@ -1,5 +1,4 @@
 import argparse
-from typing import List
 import os
 
 

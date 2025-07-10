@@ -1,6 +1,6 @@
 import os
 import argparse
-from typing import Optional
+from typing import List
 
 _args: argparse.Namespace | None = None
 
@@ -14,6 +14,13 @@ def get_args() -> argparse.Namespace:
     if _args is None:
         raise RuntimeError("Arguments have not been initialized")
     return _args
+
+
+def get_folders_to_ignore() -> List[str]:
+    FOLDER_PATHS_TO_IGNORE = os.getenv("FOLDER_PATHS_TO_IGNORE")
+    if not FOLDER_PATHS_TO_IGNORE:
+        return []
+    return [item.strip() for item in FOLDER_PATHS_TO_IGNORE.split(",")]
 
 
 def get_discogs_token() -> str:
@@ -35,6 +42,7 @@ def get_logger_name() -> str:
     if LOGGER_NAME:
         return LOGGER_NAME
     return "discogs2rb"
+
 
 def get_db_path() -> str:
     DB_PATH = os.getenv("REKORDBOX_MASTERDB_PATH")

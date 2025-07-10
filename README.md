@@ -50,8 +50,9 @@ Edit `.env` with your preferred text editor:
 * `REKORDBOX_MASTERDB_PASSWORD` – the password for decrypting the SQLite DB
 * `DISCOGS_TOKEN` – your Discogs API token (follow [this guide](#getting-a-discogs-api-token) to get token)
 * `VARIOUS_ARTIST_NAME` – the name used to represent various artist releases
-* `INCLUDE_NO_HITS=true|false` – whether to write tracks with no hits (in Discogs) to the output CSV
-* `INCLUDE_MULTIPLE_HITS=true|false` – whether to allow for multiple hits (in Discogs) for the same track to be written to the output CSV
+* `INCLUDE_NO_HITS=true|false` – (optional) whether to write tracks with no hits (in Discogs) to the output CSV
+* `INCLUDE_MULTIPLE_HITS=true|false` – (optional) whether to allow for multiple hits (in Discogs) for the same track to be written to the output CSV
+* `FOLDER_PATHS_TO_IGNORE` - (optional) whether to ignore certain folder paths from the Rekordbox query
 
 > 🔐 Note: Your Rekordbox database must be decrypted using your master password.
 
