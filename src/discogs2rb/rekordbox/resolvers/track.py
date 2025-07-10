@@ -14,7 +14,7 @@ def paths_to_ignore_query_part(paths_to_ignore: List[str]) -> str:
 
 
 def get_tracks_with_missing_album(
-    paths_to_ignore: List[str] = [], order_by: str = "TrackTitle ASC"
+    paths_to_ignore: List[str] = [], order_by: str = "TrackTitle ASC", close_connection_after_query: bool = True
 ) -> List[Track] | Literal[False]:
     db = RekordboxDB()
     cursor = db.cursor
@@ -55,6 +55,10 @@ def get_tracks_with_missing_album(
         cursor.execute(query)
 
         rows = cursor.fetchall()
+
+        if close_connection_after_query:
+            db.close()
+
         if rows:
             tracks = []
 
