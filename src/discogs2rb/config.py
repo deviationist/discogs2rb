@@ -5,6 +5,22 @@ from typing import List
 _args: argparse.Namespace | None = None
 
 
+def parse_script_arguments() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase verbosity: -v = INFO, -vv = DEBUG",
+    )
+
+    args = parser.parse_args()
+    set_args(args)
+
+    return args
+
+
 def set_args(args: argparse.Namespace) -> None:
     global _args
     _args = args

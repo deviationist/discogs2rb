@@ -49,10 +49,10 @@ def get_tracks_with_missing_album(
                 AlbumID IS NULL
                 OR AlbumArtistID IS NULL
             )
-        ORDER BY ?
+        ORDER BY {order_by}
 """
 
-        cursor.execute(query, (order_by,))
+        cursor.execute(query)
 
         rows = cursor.fetchall()
         if rows:
