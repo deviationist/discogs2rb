@@ -2,7 +2,7 @@ from .. import config
 from ..utils.helpers import get_boolenv
 from ..utils.logger import logger
 from ..utils.progress_bar import progress_instance
-from ..rekordbox.resolvers.track import get_tracks_with_missing_album
+from ..rekordbox.resolvers.track import get_tracks_with_missing_metadata
 from ..discogs.discogs_client import search_release_metadata
 import csv
 
@@ -10,7 +10,7 @@ import csv
 class ResolveDiscogsTracks:
     def exec(self):
         folders_to_ignore = config.get_folders_to_ignore()
-        tracks = get_tracks_with_missing_album(folders_to_ignore)
+        tracks = get_tracks_with_missing_metadata(folders_to_ignore)
         if not tracks:
             raise Exception("Could not get any tracks from DB.")
         track_count = len(tracks)

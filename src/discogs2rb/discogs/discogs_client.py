@@ -88,10 +88,11 @@ def get_artist_names(artists) -> str | None:
     return None
 
 
-def get_release_date(release_data: Any) -> str:
-    release_date = release_data.get("released")
-    if isinstance(release_date, str):
-        return re.sub("-00$", "", release_date)
+def get_release_date(release_data: dict | None) -> str:
+    if release_data:
+        release_date = release_data.get("released")
+        if release_date and isinstance(release_date, str):
+            return re.sub("-00$", "", release_date)
     return ""
 
 

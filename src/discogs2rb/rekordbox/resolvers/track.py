@@ -13,7 +13,7 @@ def paths_to_ignore_query_part(paths_to_ignore: List[str]) -> str:
     return query
 
 
-def get_tracks_with_missing_album(
+def get_tracks_with_missing_metadata(
     paths_to_ignore: List[str] = [],
     order_by: str = "TrackTitle ASC",
     close_connection_after_query: bool = True,

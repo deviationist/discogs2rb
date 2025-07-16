@@ -52,7 +52,7 @@ Edit `.env` with your preferred text editor:
 * `VARIOUS_ARTIST_NAME` – the name used to represent various artist releases
 * `INCLUDE_NO_HITS=true|false` – (optional) whether to write tracks with no hits (in Discogs) to the output CSV
 * `INCLUDE_MULTIPLE_HITS=true|false` – (optional) whether to allow for multiple hits (in Discogs) for the same track to be written to the output CSV
-* `FOLDER_PATHS_TO_IGNORE` - (optional) whether to ignore certain folder paths from the Rekordbox query
+* `FOLDER_PATHS_TO_IGNORE` - (optional) whether to ignore certain folder paths from the Rekordbox query, comma separated paths
 
 > 🔐 Note: Your Rekordbox database must be decrypted using your master password.
 
